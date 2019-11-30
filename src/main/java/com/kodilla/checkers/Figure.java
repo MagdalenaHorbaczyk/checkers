@@ -3,7 +3,8 @@ package com.kodilla.checkers;
 public class Figure {
     private String black = "black";
     private String white = "white";
-    private String color;
+    public String color;
+    private String empty = "_";
 
     public Figure(String color) {
         this.color = color;
