@@ -24,7 +24,7 @@ public class Board {
 
     public static void main(String[] args) {
         Board test = new Board();
-               test.initBoard();
+        test.initBoard();
     }
 
     public void initBoard() {
