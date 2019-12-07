@@ -2,13 +2,11 @@ package com.kodilla.checkers;
 
 import javafx.application.Application;
 import javafx.geometry.HPos;
-import javafx.geometry.Orientation;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
@@ -61,11 +59,11 @@ public class CheckersApp extends Application {
             }
         }
 
-        Image blackPawn = new Image("file:resources/images/black.gif");
-        FlowPane images = new FlowPane(Orientation.HORIZONTAL);
-        ImageView img = new ImageView(blackPawn);
-        images.getChildren().add(img);
-        gridPane.add(images, 1, 1);
+        Image blackPawn = new Image("black.gif");
+        ImageView blackP = new ImageView(blackPawn);
+        blackP.setFitHeight(80);
+        blackP.setFitWidth(80);
+        gridPane.add(blackP, 1, 1);
         Scene scene = new Scene(gridPane, 700, 700);
         Game game = new Game(board, gridPane);
         game.showBoard();
