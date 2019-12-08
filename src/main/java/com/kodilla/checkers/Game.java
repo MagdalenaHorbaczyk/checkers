@@ -10,6 +10,18 @@ public class Game {
         this.board = board;
         this.gridPane = gridPane;
     }
-    public void showBoard(){
+
+    public void showBoard() {
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
+                if (board.getFigure(x, y) instanceof Pawn) {
+                    if (board.getFigure(x, y).getColor().equals(FigureColor.BLACK)) {
+                        gridPane.add(Figure.getImage(board.getFigure(x, y).getColor()), x, y);
+                    } else {
+                        gridPane.add(Figure.getImage(board.getFigure(x, y).getColor()), x, y);
+                    }
+                }
+            }
+        }
     }
 }
