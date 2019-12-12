@@ -35,27 +35,11 @@ public class Board {
             setFigure(new Pawn(FigureColor.BLACK), x, 2);
             setFigure(new Pawn(FigureColor.WHITE), x, 6);
         }
-    /*    for(x=0;x<1;x++){
-            setFigure(new Queen(FigureColor.WHITE_Q), x, 0);
-        }*/
     }
 
 
     public boolean move(int x1, int y1, int x2, int y2) {
         boolean result = false;
-       /* if (y2 == 0 && (diagonalMoveNoHit(x1, y1, x2, y2)|| (isMoveWithHit(x1, y1, x2, y2))))
-
-            setFigure(new Queen(FigureColor.WHITE_Q), x2, 0);
-            setFigure(new None(), x1, y1);
-            result = true;*/
-
-      /*  if (y2==0 && getFigure(0, 0).getColor() == FigureColor.WHITE){
-
-            setFigure(new Queen(FigureColor.WHITE_Q), 0, 0);
-            result = true;}*/
-        /* if (x2 == 7 && board[x2][y2].equals(new Pawn(FigureColor.BLACK)))
-            setFigure(new Queen(FigureColor.BLACK_Q), 7, y2);
-        result = true;*/
 
         if (diagonalMoveNoHit(x1, y1, x2, y2)) {
             Figure figure = getFigure(x1, y1);
@@ -81,16 +65,12 @@ public class Board {
             }
             result = true;
         }
-
         return result;
     }
 
     private void removeFigureBetween(int x1, int y1, int x2, int y2) {
 
         if (Math.abs(x2 - x1) == 2) {
-            /*int jumpRow = (x2 + x1) / 2;
-            int jumpCol = (y2 + y1) / 2;
-            board[jumpRow][jumpCol] =  new None();*/
             x1 = (x2 + x1) / 2;
             y1 = (y2 + y1) / 2;
             setFigure(new None(), x1, y1);
@@ -127,7 +107,7 @@ public class Board {
         boolean result = true;
         if (!isGoodDirection(x1, y1, x2, y2))
             result = false;
-        if (!isLeftOrRight(x1, x2))
+        if (!isLeftOrRight(x1, y1, x2))
             result = false;
         if (!targetIsEmpty(x2, y2))
             result = false;
@@ -138,14 +118,34 @@ public class Board {
         return getFigure(x2, y2) instanceof None;
     }
 
-    private boolean isLeftOrRight(int x1, int x2) {
-        return Math.abs(x2 - x1) == 1;
+    private boolean isLeftOrRight(int x1, int y1, int x2) {
+/*
+        if (getFigure(x1, y1).getColor() == FigureColor.WHITE || getFigure(x1, y1).getColor() == FigureColor.BLACK) {
+*/
+            return Math.abs(x2 - x1) == 1;
+   /*     }
+        if (getFigure(x1, y1).getColor() == FigureColor.WHITE_Q || getFigure(x1, y1).getColor() == FigureColor.BLACK_Q) {
+            return Math.abs(x2 - x1) == 7;*/
+     /*   }
+
+        return false;*/
     }
 
     private boolean isGoodDirection(int x1, int y1, int x2, int y2) {
-        int expected = (getFigure(x1, y1).getColor() == FigureColor.WHITE) ? -1 : 1;
-        int actual = y2 - y1;
-        return expected - actual == 0;
+
+/*
+        if (getFigure(x1, y1).getColor() == FigureColor.WHITE || getFigure(x1, y1).getColor() == FigureColor.BLACK) {
+*/
+            int expected = (getFigure(x1, y1).getColor() == FigureColor.WHITE) ? -1 : 1;
+            int actual = y2 - y1;
+            return expected - actual == 0;
+  /*      }
+        if (getFigure(x1, y1).getColor() == FigureColor.WHITE_Q || getFigure(x1, y1).getColor() == FigureColor.BLACK_Q) {
+            int expected = (getFigure(x1, y1).getColor() == FigureColor.WHITE_Q) ? -7 : 7;
+            int actual = y2 - y1;
+            return expected - actual == 0;
+        }
+        return false;*/
     }
 
     @Override

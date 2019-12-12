@@ -58,46 +58,16 @@ public class CheckersApp extends Application {
             }
         }
 
-      /*  Image blackPawn = new Image("black.gif");
-        ImageView blackP = new ImageView(blackPawn);
-        blackP.setFitHeight(80);
-        blackP.setFitWidth(80);
-        gridPane.add(blackP, 1, 1);*/
         Scene scene = new Scene(gridPane, 700, 700);
 
         Game game = new Game(board, gridPane);
 
-        final double mouseX;
-        final double mouseY;
-     /*   final double oldX, oldY;
-
-        public double getOldX() {
-            return oldX;
-        }
-
-
-        public double getOldY() {
-            return oldY;
-        }*/
-
-/*
-        gridPane.setOnMousePressed(e -> {
-            mouseX = e.getSceneX();
-            mouseY = e.getSceneY();
-        });
-*/
-
-     /*   gridPane.setOnMouseDragged(e -> {
-            gridPane.relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
-        });*/
-
-
         gridPane.setOnMouseClicked(e -> {
             int x = (int) (e.getX() / 87);
             int y = (int) (e.getY() / 87);
-            System.out.println(e.getX()+" "+e.getY());
+            System.out.println(e.getX() + " " + e.getY());
             System.out.println(x + " " + y);
-            game.doClick(x,y);
+            game.doClick(x, y);
         });
 
         game.showBoard();

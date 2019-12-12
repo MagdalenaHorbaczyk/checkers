@@ -4,6 +4,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import static com.kodilla.checkers.FigureColor.WHITE;
 import static javafx.scene.paint.Color.GRAY;
 import static javafx.scene.paint.Color.YELLOW;
 
@@ -12,7 +13,7 @@ public class Game {
     private GridPane gridPane;
     private int oldX = -1;
     private int oldY = -1;
-    private FigureColor whichMove = FigureColor.WHITE;
+    private FigureColor whichMove = WHITE;
 
     public Game(Board board, GridPane gridPane) {
         this.board = board;
@@ -69,10 +70,8 @@ public class Game {
     }
 
     private FigureColor getOposite(FigureColor color) {
-        if (color == FigureColor.WHITE)
-            return FigureColor.BLACK;
-        else
-            return FigureColor.WHITE;
-
+        if (color == FigureColor.WHITE || color == FigureColor.WHITE_Q)
+            return FigureColor.BLACK /*|| FigureColor.BLACK_Q*/;
+        return FigureColor.WHITE /*|| FigureColor.WHITE_Q*/;
     }
 }
