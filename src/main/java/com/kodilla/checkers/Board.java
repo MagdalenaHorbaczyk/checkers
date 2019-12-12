@@ -103,7 +103,6 @@ public class Board {
     }
 
     private boolean diagonalMoveNoHit(int x1, int y1, int x2, int y2) {
-
         boolean result = true;
         if (!isGoodDirection(x1, y1, x2, y2))
             result = false;

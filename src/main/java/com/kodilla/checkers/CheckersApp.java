@@ -26,7 +26,6 @@ public class CheckersApp extends Application {
         board.initBoard();
         GridPane gridPane = new GridPane();
 
-
         gridPane.setPrefSize(80, 80);
         gridPane.setGridLinesVisible(true);
         int numCols = 8;
