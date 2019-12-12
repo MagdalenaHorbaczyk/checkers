@@ -1,3 +1,4 @@
+/*
 package com.kodilla.checkers;
 
 public class Move {
@@ -30,3 +31,4 @@ public class Move {
         return true;
     }
 }
+*/

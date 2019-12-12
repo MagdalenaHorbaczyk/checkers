@@ -25,14 +25,27 @@ public class Figure extends StackPane {
             whiteP.setFitHeight(80);
             whiteP.setFitWidth(80);
             return whiteP;
-        } else {
+        }
+        if (color == FigureColor.BLACK) {
             Image blackPawn = new Image("black.gif");
             ImageView blackP = new ImageView(blackPawn);
-            blackP.setFitHeight(90);
-            blackP.setFitWidth(90);
+            blackP.setFitHeight(80);
+            blackP.setFitWidth(80);
             return blackP;
         }
+        if (color == FigureColor.WHITE_Q) {
+            Image whiteQueen = new Image("whiteQ.gif");
+            ImageView whiteQ = new ImageView(whiteQueen);
+            whiteQ.setFitHeight(80);
+            whiteQ.setFitWidth(80);
+            return whiteQ;
+        } else {
+            Image blackQueen = new Image("blackQ.gif");
+            ImageView blackQ = new ImageView(blackQueen);
+            blackQ.setFitHeight(80);
+            blackQ.setFitWidth(80);
+            return blackQ;
+        }
     }
-
 }
 
