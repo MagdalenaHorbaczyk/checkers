@@ -36,16 +36,15 @@ public class Game {
             for (int x = 0; x < 8; x++) {
                 if (board.getFigure(x, y) instanceof Pawn) {
                     if (board.getFigure(x, y).getColor().equals(FigureColor.BLACK)) {
-                        gridPane.add(Figure.getImage(board.getFigure(x, y).getColor()), x, y);
+                        gridPane.add(Pawn.getImage(board.getFigure(x, y).getColor()), x, y);
                     } else {
-                        gridPane.add(Figure.getImage(board.getFigure(x, y).getColor()), x, y);
+                        gridPane.add(Pawn.getImage(board.getFigure(x, y).getColor()), x, y);
                     }
-                }
-                if (board.getFigure(x, y) instanceof Queen) {
-                    if (board.getFigure(x, y).getColor().equals(FigureColor.BLACK_Q)) {
-                        gridPane.add(Figure.getImage(board.getFigure(x, y).getColor()), x, y);
+                } else if (board.getFigure(x, y) instanceof Queen) {
+                    if (board.getFigure(x, y).getColor().equals(FigureColor.BLACK)) {
+                        gridPane.add(Queen.getImage(board.getFigure(x, y).getColor()), x, y);
                     } else {
-                        gridPane.add(Figure.getImage(board.getFigure(x, y).getColor()), x, y);
+                        gridPane.add(Queen.getImage(board.getFigure(x, y).getColor()), x, y);
                     }
                 }
             }
@@ -71,8 +70,8 @@ public class Game {
     }
 
     private FigureColor getOposite(FigureColor color) {
-        if (color == FigureColor.WHITE || color == FigureColor.WHITE_Q)
-            return FigureColor.BLACK /*|| FigureColor.BLACK_Q*/;
-        return FigureColor.WHITE /*|| FigureColor.WHITE_Q*/;
+        if (color == FigureColor.WHITE)
+            return FigureColor.BLACK;
+        return FigureColor.WHITE;
     }
 }
