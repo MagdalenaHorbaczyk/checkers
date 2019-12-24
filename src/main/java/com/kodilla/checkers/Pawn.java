@@ -9,15 +9,12 @@ public class Pawn extends Figure {
     }
 
     public static ImageView getImage(FigureColor color) {
-
         if (color == FigureColor.WHITE) {
-
             Image whitePawn = new Image("white.gif");
             ImageView whiteP = new ImageView(whitePawn);
             whiteP.setFitHeight(80);
             whiteP.setFitWidth(80);
             return whiteP;
-
         } else {
             Image blackPawn = new Image("black.gif");
             ImageView blackP = new ImageView(blackPawn);

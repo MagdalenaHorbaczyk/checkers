@@ -21,11 +21,9 @@ public class CheckersApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         Board board = new Board();
         board.initBoard();
         GridPane gridPane = new GridPane();
-
         gridPane.setPrefSize(80, 80);
         gridPane.setGridLinesVisible(true);
         int numCols = 8;
@@ -58,9 +56,7 @@ public class CheckersApp extends Application {
         }
 
         Scene scene = new Scene(gridPane, 700, 700);
-
         Game game = new Game(board, gridPane);
-
         gridPane.setOnMouseClicked(e -> {
             int x = (int) (e.getX() / 87);
             int y = (int) (e.getY() / 87);
@@ -68,7 +64,6 @@ public class CheckersApp extends Application {
             System.out.println(x + " " + y);
             game.doClick(x, y);
         });
-
         game.showBoard();
         primaryStage.setTitle("CheckersApp");
         primaryStage.setScene(scene);

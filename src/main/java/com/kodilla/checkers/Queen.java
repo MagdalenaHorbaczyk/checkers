@@ -8,12 +8,8 @@ public class Queen extends Figure {
         super(color);
     }
 
-
     public static ImageView getImage(FigureColor color) {
-
         if (color == FigureColor.WHITE) {
-
-
             Image whiteQueen = new Image("whiteQ.gif");
             ImageView whiteQ = new ImageView(whiteQueen);
             whiteQ.setFitHeight(80);

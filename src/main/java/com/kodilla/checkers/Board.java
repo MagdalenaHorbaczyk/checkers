@@ -1,10 +1,11 @@
 package com.kodilla.checkers;
 
+import static com.kodilla.checkers.FigureColor.NONE;
+
 public class Board {
     private static Figure[][] board = new Figure[8][8];
 
     public Board() {
-
         for (int x = 0; x < 8; x++)
             for (int y = 0; y < 8; y++)
                 board[x][y] = new None();
@@ -19,12 +20,11 @@ public class Board {
     }
 
     public void initBoard() {
-
         int x, y;
-        for (y = 0; y < 8; y++)
+        for (y = 0; y < 8; y++) {
             for (x = 0; x < 8; x++)
                 setFigure(new None(), x, y);
-
+        }
         for (x = 1; x < 8; x += 2) {
             setFigure(new Pawn(FigureColor.BLACK), x, 1);
             setFigure(new Pawn(FigureColor.WHITE), x, 5);
@@ -71,11 +71,16 @@ public class Board {
     }
 
     private void removeFigureBetween(int x1, int y1, int x2, int y2) {
-
-        if (Math.abs(x2 - x1) == 2) {
-            x1 = (x2 + x1) / 2;
-            y1 = (y2 + y1) / 2;
-            setFigure(new None(), x1, y1);
+        if (getFigure(x2, y2) instanceof Pawn) {
+            if (Math.abs(x2 - x1) == 2) {
+                x1 = (x2 + x1) / 2;
+                y1 = (y2 + y1) / 2;
+                setFigure(new None(), x1, y1);
+            }
+        } else {
+            int dX = (x2 > x1) ? 1 : -1;
+            int dY = (y2 > y1) ? 1 : -1;
+            setFigure(new None(), x2 - dX, y2 - dY);
         }
     }
 
@@ -83,7 +88,7 @@ public class Board {
         boolean result = true;
         if (!isGoodDirectionInHit(x1, y1, x2, y2))
             result = false;
-        if (!isLeftOrRightInHit(x1, x2))
+        if (!isLeftOrRightInHit(x1, y1, x2, y2))
             result = false;
         if (!targetIsEmptyInHit(x2, y2))
             result = false;
@@ -93,6 +98,34 @@ public class Board {
     }
 
     private boolean opponentBetween(int x1, int y1, int x2, int y2) {
+        if (getFigure(x1, y1) instanceof Pawn) {
+            return opponentBetweenPawn(x1, y1, x2, y2);
+        } else {
+            return opponentBetweenQueen(x1, y1, x2, y2);
+        }
+    }
+
+    private boolean opponentBetweenQueen(int x1, int y1, int x2, int y2) {
+        int dx = (x2 > x1) ? 1 : -1;
+        int dy = (y2 > y1) ? 1 : -1;
+        int deltaX = Math.abs(x1 - x2);
+        int deltaY = Math.abs(y1 - y2);
+        if (deltaX != deltaY)
+            return false;
+        int row = y1 + dy;
+        if (deltaX > 2) {
+            for (int col = x1 + dx; col != (x2 - 2 * dx); col += dx) {
+                if (getFigure(col, row).getColor() != NONE)
+                    return false;
+                row += dy;
+            }
+        }
+        if (getFigure(x2 - dx, y2 - dy).getColor() != oppositeColor(getFigure(x1, y1).getColor()))
+            return false;
+        return true;
+    }
+
+    private boolean opponentBetweenPawn(int x1, int y1, int x2, int y2) {
         FigureColor expectedColor = oppositeColor(getFigure(x1, y1).getColor());
         int dX = (x2 > x1) ? 1 : -1;
         int dY = (y2 > y1) ? 1 : -1;
@@ -110,14 +143,21 @@ public class Board {
         return getFigure(x2, y2) instanceof None;
     }
 
-    private boolean isLeftOrRightInHit(int x1, int x2) {
-        return Math.abs(x2 - x1) == 2;
+    private boolean isLeftOrRightInHit(int x1, int y1, int x2, int y2) {
+        if (getFigure(x1, y1) instanceof Pawn) {
+            return Math.abs(x2 - x1) == 2;
+        } else {
+            return Math.abs(x2 - x1) == Math.abs(y2 - y1);
+        }
     }
 
     private boolean isGoodDirectionInHit(int x1, int y1, int x2, int y2) {
-        int expected = (getFigure(x1, y1).getColor() == FigureColor.WHITE) ? -2 : 2;
-        int actual = y2 - y1;
-        return expected - actual == 0;
+        if (getFigure(x1, y1) instanceof Pawn) {
+            int expected = (getFigure(x1, y1).getColor() == FigureColor.WHITE) ? -2 : 2;
+            int actual = y2 - y1;
+            return expected - actual == 0;
+        } else
+            return true;
     }
 
     private boolean diagonalMoveNoHit(int x1, int y1, int x2, int y2) {
@@ -127,21 +167,22 @@ public class Board {
                 result = false;
             if (!isLeftOrRight(x1, y1, x2))
                 result = false;
-        } else {
-            /*  reguly ruchu dla damki*/
-            int myY = (y2 > y1) ? 1 : -1;
-            int myX = (x2 > x1) ? 1 : -1;
-            for (; y1 > y2 || y1 < y2; y1++) {
-                for (; x1 > x2 || x1 < x2; x1++) {
-                    if (getFigure(myX + x1, myY + y1) instanceof None) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-            result = true;
         }
+        if (getFigure(x1, y1) instanceof Queen) {
+            int dx = (x2 > x1) ? 1 : -1;
+            int dy = (y2 > y1) ? 1 : -1;
+            int deltaX = Math.abs(x1 - x2);
+            int deltaY = Math.abs(y1 - y2);
+            if (deltaX != deltaY)
+                return false;
+            int row = y1 + dy;
+            for (int col = x1 + dx; col != x2; col += dx) {
+                if (getFigure(col, row).getColor() != NONE)
+                    return false;
+                row += dy;
+            }
+        }
+
         if (!targetIsEmpty(x2, y2))
             result = false;
         return result;
@@ -153,31 +194,18 @@ public class Board {
 
     private boolean isLeftOrRight(int x1, int y1, int x2) {
         if (getFigure(x1, y1) instanceof Pawn) {
-
             return Math.abs(x2 - x1) == 1;
         }
-       /* if (getFigure(x1, y1) instanceof Queen) {
-            return Math.abs(x2 - x1) <= 7;
-        }*/
-
         return true;
     }
 
     private boolean isGoodDirection(int x1, int y1, int x2, int y2) {
 
         if (getFigure(x1, y1) instanceof Pawn) {
-
             int expected = (getFigure(x1, y1).getColor() == FigureColor.WHITE) ? -1 : 1;
             int actual = y2 - y1;
             return expected - actual == 0;
         }
-
-       /* if (getFigure(x1, y1) instanceof Queen) {
-            int expected = (getFigure(x1, y1).getColor() == FigureColor.WHITE) ? 0 : 0;
-            int actual = y2 - y1;
-            return Math.abs(expected - actual) <= 7;
-        }*/
-
         return true;
     }
 

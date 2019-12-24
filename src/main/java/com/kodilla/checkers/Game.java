@@ -15,7 +15,6 @@ public class Game {
     private int oldY = -1;
     private FigureColor whichMove = WHITE;
 
-
     public Game(Board board, GridPane gridPane) {
         this.board = board;
         this.gridPane = gridPane;
